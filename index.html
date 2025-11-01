@@ -42,7 +42,6 @@
 
         // Colors
         const WHITE = '#FFFFFF';
-       
         const RED = '#FF0000';
         const GREEN = '#00FF00';
         const BLUE = '#0078FF';
@@ -68,44 +67,6 @@
                 this.y = canvas.height - 150;
                 this.jumpVelocity = 0;
                 this.isJumping = false;
-
-                // Need to complete these critical parts:
-
-// 1. Create player instance
-const player = new Player();
-
-// 2. Arrays to store game objects
-let obstacles = [];
-let coins = [];
-
-// 3. Complete game loop function
-function gameLoop() {
-    if (gameOver) return;
-    
-    // Clear canvas
-    ctx.fillStyle = '#222';
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-    
-    // Update game objects
-    player.update();
-    
-    // Draw everything
-    player.draw();
-    
-    // Continue loop
-    requestAnimationFrame(gameLoop);
-}
-
-// 4. Input handlers
-document.addEventListener('keydown', (e) => {
-    if (e.code === 'ArrowLeft') player.moveLeft();
-    if (e.code === 'ArrowRight') player.moveRight();
-    if (e.code === 'Space') player.jump();
-});
-
-// 5. Start the game
-gameLoop();
-                
             }
             
             draw() {
@@ -158,28 +119,54 @@ gameLoop();
                 if (this.currentLane < 2) {
                     this.currentLane += 1;
                 }
-            
-            
-           
-                    // Complete the getRect method
-getRect() {
-    return {
-        x: this.x - this.width/2 + 10,
-        y: this.y - this.height + 10,
-        width: this.width - 20,
-        height: this.height - 20
-    };
-}
-
-// Add game loop
-function gameLoop() {
-    // Clear canvas
-    // Update player
-    // Update obstacles/coins
-    // Check collisions
-    // Draw everything
-    // Repeat
-}
             }
+            
+            getRect() {
+                return {
+                    x: this.x - this.width/2 + 10,
+                    y: this.y - this.height + 10,
+                    width: this.width - 20,
+                    height: this.height - 20
+                };
+            }
+        } // ✅ Player class ends here
 
-// Add event listeners for controls
+        // ✅ CORRECT PLACEMENT - Insert completion code HERE:
+
+        // 1. Create player instance
+        const player = new Player();
+
+        // 2. Arrays to store game objects
+        let obstacles = [];
+        let coins = [];
+
+        // 3. Complete game loop function
+        function gameLoop() {
+            if (gameOver) return;
+            
+            // Clear canvas
+            ctx.fillStyle = '#222';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            // Update game objects
+            player.update();
+            
+            // Draw everything
+            player.draw();
+            
+            // Continue loop
+            requestAnimationFrame(gameLoop);
+        }
+
+        // 4. Input handlers
+        document.addEventListener('keydown', (e) => {
+            if (e.code === 'ArrowLeft') player.moveLeft();
+            if (e.code === 'ArrowRight') player.moveRight();
+            if (e.code === 'Space') player.jump();
+        });
+
+        // 5. Start the game
+        gameLoop();
+    </script>
+</body>
+</html>
