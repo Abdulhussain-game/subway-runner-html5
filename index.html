@@ -42,6 +42,7 @@
 
         // Colors
         const WHITE = '#FFFFFF';
+        const BLACK = '#000000';
         const RED = '#FF0000';
         const GREEN = '#00FF00';
         const BLUE = '#0078FF';
@@ -129,7 +130,7 @@
                     height: this.height - 20
                 };
             }
-        } // ✅ Player class ends here
+       
 
         // ✅ CORRECT PLACEMENT - Insert completion code HERE:
 
@@ -164,6 +165,7 @@
             if (e.code === 'ArrowRight') player.moveRight();
             if (e.code === 'Space') player.jump();
         });
+         } // ✅ Player class ends here
 
         // 5. Start the game
         gameLoop();
