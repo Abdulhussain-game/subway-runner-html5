@@ -122,7 +122,25 @@
                 }
             }
             
-            getRect() {
-                return {
-                    x: this.x - this.width/2 + 10,
-                    y: this.y - this.height + 10,
+           
+                    // Complete the getRect method
+getRect() {
+    return {
+        x: this.x - this.width/2 + 10,
+        y: this.y - this.height + 10,
+        width: this.width - 20,
+        height: this.height - 20
+    };
+}
+
+// Add game loop
+function gameLoop() {
+    // Clear canvas
+    // Update player
+    // Update obstacles/coins
+    // Check collisions
+    // Draw everything
+    // Repeat
+}
+
+// Add event listeners for controls
