@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subway Runner - JavaScript</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #222;
+            font-family: Arial, sans-serif;
+        }
+        canvas {
+            border: 2px solid #444;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+        .instructions {
+            color: white;
+            text-align: center;
+            margin-top: 20px;
+            max-width: 800px;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <canvas id="gameCanvas" width="800" height="600"></canvas>
+        <div class="instructions">
+            <p>Use LEFT/RIGHT arrows to change lanes, SPACE to jump. Press R to restart after game over.</p>
+        </div>
+    </div>
+
+    <script>
+        // Game variables
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+
+        // Colors
+        const WHITE = '#FFFFFF';
+        const BLACK = '#000000';
+        const RED = '#FF0000';
+        const GREEN = '#00FF00';
+        const BLUE = '#0078FF';
+        const YELLOW = '#FFFF00';
+        const GRAY = '#646464';
+        const BROWN = '#8B4513';
+
+        // Game variables
+        let score = 0;
+        let gameOver = false;
+        let gameSpeed = 5;
+        let obstacleTimer = 0;
+        let coinTimer = 0;
+
+        // Player class
+        class Player {
+            constructor() {
+                this.width = 40;
+                this.height = 60;
+                this.lanes = [canvas.width/2 - 100, canvas.width/2, canvas.width/2 + 100];
+                this.currentLane = 1; // 0: left, 1: middle, 2: right
+                this.x = this.lanes[this.currentLane];
+                this.y = canvas.height - 150;
+                this.jumpVelocity = 0;
+                this.isJumping = false;
+            }
+            
+            draw() {
+                // Draw player as a simple character
+                ctx.fillStyle = BLUE;
+                ctx.fillRect(this.x - this.width/2, this.y - this.height, this.width, this.height);
+                
+                // Draw head
+                ctx.beginPath();
+                ctx.arc(this.x, this.y - this.height - 15, 20, 0, Math.PI * 2);
+                ctx.fill();
+            }
+            
+            jump() {
+                if (!this.isJumping) {
+                    this.jumpVelocity = -15;
+                    this.isJumping = true;
+                }
+            }
+            
+            update() {
+                // Handle jumping physics
+                if (this.isJumping) {
+                    this.y += this.jumpVelocity;
+                    this.jumpVelocity += 0.8; // Gravity
+                    
+                    // Check if landed
+                    if (this.y >= canvas.height - 150) {
+                        this.y = canvas.height - 150;
+                        this.isJumping = false;
+                    }
+                }
+                
+                // Update x position based on current lane
+                const targetX = this.lanes[this.currentLane];
+                if (this.x < targetX) {
+                    this.x += Math.min(10, targetX - this.x);
+                } else if (this.x > targetX) {
+                    this.x -= Math.min(10, this.x - targetX);
+                }
+            }
+            
+            moveLeft() {
+                if (this.currentLane > 0) {
+                    this.currentLane -= 1;
+                }
+            }
+            
+            moveRight() {
+                if (this.currentLane < 2) {
+                    this.currentLane += 1;
+                }
+            }
+            
+            getRect() {
+                return {
+                    x: this.x - this.width/2 + 10,
+                    y: this.y - this.height + 10,
