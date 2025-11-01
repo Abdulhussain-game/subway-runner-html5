@@ -68,6 +68,44 @@
                 this.y = canvas.height - 150;
                 this.jumpVelocity = 0;
                 this.isJumping = false;
+
+                // Need to complete these critical parts:
+
+// 1. Create player instance
+const player = new Player();
+
+// 2. Arrays to store game objects
+let obstacles = [];
+let coins = [];
+
+// 3. Complete game loop function
+function gameLoop() {
+    if (gameOver) return;
+    
+    // Clear canvas
+    ctx.fillStyle = '#222';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    
+    // Update game objects
+    player.update();
+    
+    // Draw everything
+    player.draw();
+    
+    // Continue loop
+    requestAnimationFrame(gameLoop);
+}
+
+// 4. Input handlers
+document.addEventListener('keydown', (e) => {
+    if (e.code === 'ArrowLeft') player.moveLeft();
+    if (e.code === 'ArrowRight') player.moveRight();
+    if (e.code === 'Space') player.jump();
+});
+
+// 5. Start the game
+gameLoop();
+                
             }
             
             draw() {
